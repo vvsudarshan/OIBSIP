@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            animation: gradientAnimation 5s infinite alternate;
+        }
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        #input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        label {
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        input, select, button {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        input:hover, select:hover, button:hover {
+            transform: scale(1.1);
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            transition: opacity 0.5s ease-in-out;
+            color: #28a745;
+        }
+        #result:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Temperature Converter</h2>
+    <div id="input-container">
+
+        <label for="temperature">Enter Temperature:</label>
+        <input type="text" id="temperature" placeholder="Enter temperature" oninput="validateInput()" onmouseover="onMouseOver(this)" onmouseout="onMouseOut(this)">
+
+        <label for="unit">Choose Unit:</label>
+        <select id="unit" onmouseover="onMouseOver(this)" onmouseout="onMouseOut(this)">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <button onclick="convertTemperature()" onmouseover="onMouseOver(this)" onmouseout="onMouseOut(this)">Convert</button>
+
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function validateInput() {
+            var input = document.getElementById("temperature").value;
+            if (isNaN(input)) {
+                alert("Please enter a valid number.");
+                document.getElementById("temperature").value = "";
+            }
+        }
+
+        function convertTemperature() {
+            var temperature = parseFloat(document.getElementById("temperature").value);
+            var unit = document.getElementById("unit").value;
+            var resultElement = document.getElementById("result");
+
+            if (isNaN(temperature)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            if (unit === "celsius") {
+                var convertedTemperature = (temperature * 9/5) + 32;
+                resultElement.innerText = "Converted Temperature: " + convertedTemperature.toFixed(2) + "°F";
+            } else if (unit === "fahrenheit") {
+                var convertedTemperature = (temperature - 32) * 5/9;
+                resultElement.innerText = "Converted Temperature: " + convertedTemperature.toFixed(2) + "°C";
+            } else if (unit === "kelvin") {
+                var convertedTemperature = temperature + 273.15;
+                resultElement.innerText = "Converted Temperature: " + convertedTemperature.toFixed(2) + "K";
+            }
+
+            resultElement.style.opacity = 1;
+        }
+
+        function onMouseOver(element) {
+            element.style.transform = "scale(1.1)";
+        }
+
+        function onMouseOut(element) {
+            element.style.transform = "scale(1)";
+        }
+    </script>
+
+</body>
+</html>
